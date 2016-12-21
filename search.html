@@ -1,0 +1,181 @@
+<?php
+/*-----------------------------------------------------
+Start Session & set header and requirements
+------------------------------------------------------*/
+session_start();
+$user = $_SESSION["user"];
+if (empty($user)){
+  header("Location:http://bonappetit.website/index.html?");
+}
+?>
+<!-- key=AIzaSyBBrLQ8ThCEKlQA9j89t6cCQblzet_wIy8 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="css/simple-sidebar.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <title>Bon-Appetit Search</title>
+    </head>
+
+    <body>
+      <?php include_once("analyticstracking.php") ?>
+        <div id="wrapper">
+        <header>
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li><i href="#menu-toggle" aria-hidden="true" class="fa fa-bars fa-3x" id="menu-toggle2"></i></li>
+                <li><a href="reviews.html" class="home-icon">Home</a></li>
+                <li><a href="account.html"></i>My Account</a></li>
+                <li><a href="rate.html">Rate Us</a></li>
+                <li><a href="contact.html"></i>Contact Us</a></li>
+                <li><a href="php/logout.php">Log Out</a></li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+            <i class="fa fa-bars fa-3x" aria-hidden="true" href="#menu-toggle" id="menu-toggle"></i>
+            <a href="reviews.html"><img src="images/logo.png" id="etrance-title" alt="Bon-Appetit logo" /></a>
+
+        </header>
+
+        <nav>
+            <ul id="page-nav">
+                <li><a href="search.html" id="searchButton" class="active">Search</a></li>
+                <li><a href="reviews.html" id="reviewButton">My Reviews</a></li>
+                <li><a href="eat.html" id="eatButton">To Eat</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <h2>Search For Food</h2>
+            <div id="search">
+              <label for="pac-input">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </label>
+              <input id="pac-input" class="controls" type="search" placeholder="">
+            </div>
+            <div id="map"></div>
+      <script>
+        function initAutocomplete() {
+         var myLatLong = {lat: 32.1979934, lng: -110.9145944};
+
+         var map = new google.maps.Map(document.getElementById('map'), {
+          center: myLatLong,
+          zoom: 10,
+          mapTypeId: 'roadmap'
+        });
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var tick = 0;
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+          searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            window.alert("Counter: " + tick + "\nSorry there are no results for your search.\nIf the counter is greater than 2,500 please try again tomorrow.")
+            return;
+          }
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+
+            // Create a marker for each place.
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+
+          /**********************************************
+                      Display Search Results
+          ***********************************************/
+          var results = document.getElementById("search-results");
+
+          input.onsearch=function(){
+            results.innerHTML = "";
+            window.location('search.html#search-results');
+          }
+
+          for (i=0; i<places.length; i++) {
+            tick++;
+            var place = document.createElement('div');
+            place.classList.add('search-place');
+            var places_name = places[i].name;
+            var places_add = places[i].formatted_address;
+            places_add = places_add.slice(0, -15);
+
+            var aToEat = document.createElement('a');
+            aToEat.setAttribute('href',"php/search-addeat.php?rest=" + places_name);
+            aToEat.setAttribute('class',"btn btn-success search-eat");
+            aToEat.innerHTML = "+ To Eat";
+
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href',"php/review-toeat.php?rest=" + places_name);
+            aTag.setAttribute('class',"btn btn-success search-review");
+            aTag.innerHTML = "+ Review";
+
+            place.innerHTML = places_name.bold() + "<br/>" + places_add;
+            place.appendChild(aToEat);
+            place.appendChild(aTag);
+            results.appendChild(place);
+          }
+        });
+      }
+
+
+      </script>
+
+        <div id="search-results">
+        </div>
+
+        </main>
+        <div id="clear-fix"></div>
+        <div class="push"></div>
+    </div>
+        <footer>
+            <p>&copy; 2016. All rights reserved. An ISTA 416 Project<p>
+        </footer>
+
+        <!-- Menu Toggle Script -->
+        <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        $("#menu-toggle2").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBrLQ8ThCEKlQA9j89t6cCQblzet_wIy8&libraries=places&callback=initAutocomplete"async defer>
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,208 @@
+<?php
+/*-----------------------------------------------------
+Start Session & set header and requirements
+------------------------------------------------------*/
+session_start();
+require 'php/db.php';
+$user = $_SESSION["user"];
+if (empty($user)){
+  header("Location:http://bonappetit.website/index.html");
+}
+
+if (isset($_GET['Message'])){
+  print '<script type="text/javascript">alert("' . $_GET['Message'] . '");</script>';
+}
+
+$toEat = 'false';
+if (isset($_GET['rest']) && isset($_GET['food'])){
+  $rest=preg_replace('/ /', '&#32;', $_GET['rest']);
+  $food=preg_replace('/ /', '&#32;', $_GET['food']);
+  $dbrest = htmlspecialchars(strip_tags($_GET['rest']),ENT_QUOTES);
+  $dbfood = htmlspecialchars(strip_tags($_GET['food']),ENT_QUOTES);
+
+/*--------------- NOT USING AT THIS TIME ------------------------------
+  $comments = json_decode(getComments($user, $dbrest, $dbfood, true));
+  $str_comment=$comments[0]->{comments};
+  $comments = preg_replace('/ /', '&#32;', $str_comment);
+  --------------------------------------------------------------------*/
+
+  $toEat = 'true';
+}
+
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="css/simple-sidebar.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script type="text/javascript">
+        var parts = window.location.search.substr(1).split("&");
+        var $_GET = {};
+        for (var i = 0; i < parts.length; i++) {
+            var temp = parts[i].split("=");
+            $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
+        }
+          window.addEventListener('load',function(){
+            var url = window.location.href;
+            if(url.indexOf("?Success=") != -1 || url.indexOf("&Success=") != -1){
+              var msg_text = $_GET['Success'];
+              var message = document.getElementById("message");
+              message.innerHTML = msg_text;
+              setTimeout(function() {
+                $(message).delay(2000).fadeOut(1000);
+              });
+            }
+          });
+        </script>
+
+        <title>Bon-Appetit</title>
+    </head>
+
+    <body>
+      <?php include_once("analyticstracking.php") ?>
+        <div id="wrapper">
+        <header>
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li><i href="#menu-toggle" aria-hidden="true" class="fa fa-bars fa-3x" id="menu-toggle2"></i></li>
+                <li><a href="reviews.html" class="home-icon">Home</a></li>
+                <li><a href="account.html"></i>My Account</a></li>
+                <li><a href="rate.html">Rate Us</a></li>
+                <li><a href="contact.html"></i>Contact Us</a></li>
+                <li><a href="php/logout.php">Log Out</a></li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+            <i class="fa fa-bars fa-3x" aria-hidden="true" href="#menu-toggle" id="menu-toggle"></i>
+            <img src="images/logo.png" id="entrance-title" alt="Bon-Appetit logo" />
+        </header>
+
+        <nav>
+            <ul id="page-nav">
+                <li><a href="search.html" id="searchButton">Search</a></li>
+                <li><a href="reviews.html" id="reviewButton" class="active">My Reviews</a></li>
+                <li><a href="eat.html" id="eatButton">To Eat</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <h2><?php echo $_SESSION["first"]; ?>'s Reviews</h2>
+            <div id="message"></div>
+            <div id="sub_nav">
+              <?php if($toEat == 'true'){
+                echo '<button type="button" class="btn btn-info"  id="newreviewbutton"  data-toggle="collapse" data-target="#addReview" aria-expanded="true">New Review</button>
+                </div>
+                <div id="addReview" class="collapse in">';
+                }
+                else{
+                echo '<button type="button" class="btn btn-info collapsed"  id="newreviewbutton" data-toggle="collapse" data-target="#addReview">New Review</button>
+                </div>
+                <div id="addReview" class="collapse" aria-expanded="true">';
+                }
+              ?>
+              <!-- <button type="button" class="btn btn-info" id='newreviewbutton' data-toggle="collapse" data-target="#addReview">New Review</button>
+            </div>
+            <div id="addReview" class="collapse"> -->
+            <form id="new-review-form" action="php/add-review.php" method="post">
+                <label>Restaurant Name</label><br/>
+                <?php if($toEat == 'true'){
+                  echo '<input type="text" id="toEatRest" name="restaurant" value="' . $rest . '"></input><br/>';
+                  }
+                  else{
+                  echo'<input type="text" id="toEatRest" name="restaurant" value=""></input><br/>';
+                  }
+                  ?>
+                <!-- <input type="text" name="restaurant" value=""></input><br/> -->
+                <label>Food Dish</label><br/>
+                <?php if($toEat == 'true'){
+                  echo '<input type="text" id="toEatFood" name="dish" value="' . $food . '" spellcheck="true"></input><br/>';
+                  }
+                  else{
+                  echo'<input type="text" id="toEatFood" name="dish" value="" spellcheck="true"></input><br/>';
+                  }
+                  ?>
+                <!-- <input type="text" name="dish" value="" spellcheck="true"></input><br/> -->
+                <label>Comments</label><br/>
+                <?php if($toEat == 'true'){
+                  echo '<textarea id="toEatComments" name="comments" form="new-review-form">' . $comments . '</textarea><br/>';
+                  }
+                  else{
+                  echo'<textarea id="toEatComments" name="comments" form="new-review-form"></textarea><br/>';
+                  }
+                  ?>
+                <!-- <textarea name="comments" form="new-review-form"></textarea><br/> -->
+                <div class="stars">
+                    <input class="star star-5" id="star-5" type="radio" name="score" value="5"/>
+                    <label class="star star-5" for="star-5"></label>
+                    <input class="star star-4" id="star-4" type="radio" name="score" value="4"/>
+                    <label class="star star-4" for="star-4"></label>
+                    <input class="star star-3" id="star-3" type="radio" name="score" value="3"/>
+                    <label class="star star-3" for="star-3"></label>
+                    <input class="star star-2" id="star-2" type="radio" name="score" value="2"/>
+                    <label class="star star-2" for="star-2"></label>
+                    <input class="star star-1" id="star-1" type="radio" name="score" value="1"/>
+                    <label class="star star-1" for="star-1"></label>
+                </div><br/>
+                <input type="submit" class="btn btn-info" value="Submit"></input>
+
+            </form>
+          </div>
+            <div id="review-list">
+            <?php
+              $original = array();
+              $restaurants = json_decode(getRests($user), true);
+              foreach($restaurants as $restaurant)
+              {
+                if(!in_array($restaurant['restaurant'], $original)){
+                  array_push($original, $restaurant['restaurant']);
+                  print_r("<div class='search-place'>" . "<strong>" . $restaurant['restaurant'] . "</strong>" . "<br>");
+                  $foods = json_decode(getFoods($user, $restaurant['restaurant']), true);
+                  foreach($foods as $food){
+                    print_r($food['food'] . "&nbsp;&nbsp;&nbsp;");
+                    $score = json_decode(getFoodReviews($user, $restaurant['restaurant'], $food['food'], true));
+                    print_r("<strong>". $score[0]->{score} . "/5" . "</strong><br>");
+                    $comments = json_decode(getComments($user, $restaurant['restaurant'], $food['food'], true));
+                      if($comments[0]->{comments}!=""){
+                      print_r("<div class='comments'><em>" . $comments[0]->{comments} . "</em></div>");
+                      }
+                  }
+                  print_r("</div>");
+                }
+              }
+            ?>
+            </div>
+
+
+
+        </main>
+        <div class="push"></div>
+    </div>
+        <footer>
+            <p>&copy; 2016. All rights reserved. An ISTA 416 Project<p>
+        </footer>
+
+        <!-- Menu Toggle Script -->
+        <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        $("#menu-toggle2").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        </script>
+
+    </body>
+</html>

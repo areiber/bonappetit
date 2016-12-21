@@ -1,0 +1,64 @@
+<?php
+if (isset($_GET['Message'])){
+  print '<script type="text/javascript">alert("' . $_GET['Message'] . '");</script>';
+}
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <title>Bon-Appetit</title>
+    </head>
+
+    <body>
+      <?php include_once("analyticstracking.php") ?>
+      <div id="wrapper">
+        <header>
+            <img src="images/logo.png" id="entrance-title" alt="Bon-Appetit logo" />
+        </header>
+
+        <main>
+        <div id="login-welcome">
+          <h2>Welcome to Bon-Appetit!</h2>
+          <p>Create an account to begin reviewing and tracking your food adventures.</p>
+        </div>
+        <div class="entrance">
+            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#login">Login >>></button>
+            <div id="login" class="collapse">
+                <form action="php/login.php" method="post">
+                    <input type="text" name="user" value="" placeholder="Username" required></input><br/>
+                    <input type="password" name="pw" value="" placeholder="Password" required></input><br/>
+                    <!-- <a href="password.html">Forgot Password?</a><br/> -->
+                    <input class="btn btn-info" type="submit" value="Log In"></input>
+                </form>
+            </div>
+        </div>
+
+        <div class="entrance">
+            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#signup">Sign Up >>></button>
+            <div id="signup" class="collapse">
+                <form action="php/register.php" method="post">
+                    <input type="text" name="user" value="" placeholder="Username" required></input><br/>
+                    <input type="password" name="pw" value="" placeholder="Password" required></input><br/>
+                    <input type="text" name="first" value="" placeholder="First Name" required></input><br/>
+                    <input type="text" name="last" value="" placeholder="Last Name" required></input><br/>
+                    <input type="email" name="email" value="" placeholder="Email" required></input><br/>
+                    <input class="btn btn-info" type="submit" value="Sign Up"></input>
+                </form>
+            </div>
+        </div>
+
+        <div class="push"></div>
+
+        </main>
+      </div>
+        <footer>
+            <p>&copy; 2016. All rights reserved. An ISTA 416 Project<p>
+        </footer>
+    </body>
+</html>

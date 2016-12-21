@@ -1,0 +1,653 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Yellowtail');
+
+/*******************************************************************************
+                        Color Theme
+*******************************************************************************
+Primary Color palette: http://paletton.com/#uid=30n0u0kjxn94uvdbGrUn0fury6Y
+
+* Dark Brown: #371a08 rgb(55, 26, 8)
+* Light Tan: #fcf2ec rgb(252, 242, 236)
+
+* Dark Blue: #081424 rgb(8, 20, 36)
+* Mid-tone Blue: #5e7493 rgb(94,116,147)
+* Light Blue: #CED5DE rgba(206, 213, 222, 0.25);
+
+* Dark Green: #32691E rgb(50, 105, 30)
+* Mid-tone Green: #579E3D rgb(87, 158, 61)
+
+* Green-blue highlight: #3f869b rgb(63, 134, 155)
+*/
+/*******************************************************************************
+                        Universal styles
+*******************************************************************************/
+
+/**********************************************
+        General Page Styles/formatting
+***********************************************/
+html,
+body {
+  height: 100%;
+  margin: 0;
+  min-width: 300px;
+}
+
+div#wrapper{
+  min-height: 100%;
+  margin: 0 auto -100px;
+}
+
+footer, .push {
+	height: 58px; /* .push must be the same height as .footer */
+}
+
+.entrance {
+  max-width: 300px;
+  padding: 1em;
+  margin: 0 auto;
+}
+
+h1, h2{
+  text-align: center;
+}
+
+h2{
+  font-size: 1.8em;
+  margin: 24px 0 15px 0;
+}
+
+div#login-welcome h2{
+  font-family: 'Yellowtail', cursive;
+  font-size: 2.2em;
+}
+
+div#login-welcome p{
+  font-family: 'Lato', sans-serif;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+/**********************************************
+                  Header Styles
+***********************************************/
+header{
+  background-color: #fcf2ec;
+  border-bottom: 2px solid #371a08;
+}
+
+header img{
+  display: block;
+  /*max-width: 30%;*/
+  padding: 2% 0;
+  margin-left: calc(50% - 175px);
+
+}
+
+/**********************************************
+                  Main Nav Styles
+***********************************************/
+nav {
+  text-align: center;
+  margin: 15px 0;
+  background-color: #371a08;
+  position: relative;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  list-style-type: none;
+  /*padding: 2%;*/
+}
+
+nav ul li a {
+  display: block;
+  position: absolute;
+  width: 30%;
+  background-color: #fcf2ec;
+  border: 1px solid #371a08;
+  top: -9px;
+  margin: 0 1%;
+  line-height: 36px;
+  /*padding: 1em;*/
+  color: #371A08;
+  border-radius: 5px;
+}
+
+nav ul li a#searchButton {
+  left: 0;
+}
+
+nav ul li a#reviewButton {
+  left: 33%;
+  width: 32%
+}
+nav ul li a#eatButton {
+  right: 0;
+}
+
+nav ul li a.active {
+  background-color: #5e7493;
+  border: 1px solid transparent;
+  color: #fff;
+}
+
+nav ul li a:hover,
+nav ul li a:focus{
+  outline: #371a08;
+  text-decoration: none;
+  background-color: #B87348;
+  color: white;
+}
+
+input.btn[type="submit"]{
+  background-color: #5e7493;
+  border-color: #081424;
+}
+
+input.btn[type="submit"]:hover,
+input.btn[type="submit"]:focus,
+nav ul li a.active:hover,
+nav ul li a.active:focus{
+  background-color: #3f869b;
+}
+
+input.btn[type="submit"].btn:focus,
+nav ul li a.active:focus{
+  outline-color: #081424;
+  text-decoration: none;
+  color: #fff;
+}
+
+.entrance button{
+  background-color: #32691E;
+  border-color: #305722;
+  min-width: 96px;
+  max-width: 15%;
+  margin-top: 2em;
+}
+
+.entrance button:hover,
+.entrance button:focus{
+  background-color: #579E3D;
+  border-color: #305722;
+}
+
+.entrance button:focus{
+  outline-color: #305722;
+}
+
+
+/**********************************************
+             Sidebar Nav Styles
+***********************************************/
+.fa-bars {
+  margin: 0 5px 0 10px;
+}
+
+div#wrapper.toggled header,
+div#wrapper.toggled nav
+{
+  margin-right: -125px;
+}
+
+div#wrapper i#menu-toggle2,
+div#wrapper.toggled i#menu-toggle2{
+    margin: 0;
+    text-indent: 0;
+    color: #999;
+}
+
+div#wrapper.toggled i#menu-toggle
+{
+  position: absolute;
+  left: -50px;
+  transition: all 2s;
+}
+
+div#wrapper i#menu-toggle{
+  position: absolute;
+  left: 0px;
+}
+
+#menu-toggle {
+  cursor: pointer;
+}
+
+li a.home-icon::before{
+  content: "";
+  background-image: url("../images/home_icon.svg");
+  background-repeat: no-repeat;
+  padding-left: 24px;
+}
+
+li a.home-icon:hover::before{
+  content: "";
+  background-image: url("../images/home_icon-white.svg");
+}
+
+/**********************************************
+            Message/Alert Styles
+***********************************************/
+div#message{
+  font-size: 1.1em;
+  font-weight: bold;
+  font-style: italic;
+  color:#579E3D;
+  text-align: center;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+/**********************************************
+               Form styles
+***********************************************/
+form {
+  text-align: center;
+}
+
+form#change-pw a.btn-danger,
+form#myaccount a.btn-danger,
+form#contact-form a.btn-danger,
+form#rate-form a.btn-danger
+{
+    margin-right: 20px;
+}
+form#change-pw input,
+form#myaccount input,
+form#contact-form textarea{
+    margin-bottom: 10px;
+}
+
+form#change-pw input[type=submit],
+form#myaccount input[type=submit]{
+  margin-bottom: 0;
+}
+
+button#newreviewbutton,
+button#addtoeat
+{
+  display: block;
+  background-color: #579E3D;
+  border-color: #32691E;
+  margin: 10px auto;
+}
+
+button a{
+  color: white;
+}
+
+button a:hover{
+  text-decoration: none;
+}
+
+form#new-review-form label,
+form#addEatForm label,
+form#addEatForm input.eat-submit{
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+/**********************************************
+              Star rating styles
+***********************************************/
+div.stars {
+  width: 280px;
+  display: inline-block;
+}
+
+div #rateus{
+  width: 280px;
+  display: inline-block;
+  margin-left: calc(50% - 150px);
+}
+
+input.star { display: none; }
+
+label.star {
+  float: right; /*required for proper star order*/
+  padding: 10px;
+  font-size: 36px;
+  color: #444;
+  transition: all .2s;
+}
+
+input.star:checked ~ label.star:before {
+  content: '\f005';
+  color: #FD4;
+  transition: all .25s;
+}
+
+input.star-5:checked ~ label.star:before {
+  color: #FE7;
+  text-shadow: 0 0 20px #952;
+}
+
+input.star-1:checked ~ label.star:before { color: #F62; }
+
+label.star:hover { transform: rotate(-15deg) scale(1.3); }
+
+label.star:before {
+  content: '\f006';
+  font-family: FontAwesome;
+}
+
+/**********************************************
+              Map/Search styles
+***********************************************/
+div#search{
+  position: relative;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+#map {
+  height: 400px;
+  width: 87%;
+  margin: 0 auto;
+  display: none;
+}
+
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  padding: 0 13px 0 30px;
+  border: 1px solid #5e7493;
+  border-radius: 16px;
+  margin: 30px auto 10px auto;
+  text-overflow: ellipsis;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+.pac-container {
+  font-family: Roboto;
+}
+
+label[for="pac-input"]{
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  font-size: 16px;
+  color: #5e7493;
+}
+
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+#target {
+  width: 345px;
+}
+
+.side-active {
+  background-color: #DCD0C0;
+  color: black;
+}
+
+#search-results {
+  width: 100%;
+}
+
+.search-place{
+    border: 2px solid #5e7493;
+    border-radius: 10px;
+    padding: 10px;
+    padding-bottom: 30px;
+    background-color: rgba(206, 213, 222, 0.25);
+    margin: 1.5em auto;
+    width: 50%;
+    position: relative;
+}
+
+.search-place a.search-eat,
+.search-place a.search-review {
+  position: absolute;
+  bottom: 5px;
+  padding: 0px 2px;
+  background-color: #26A419;
+  display: block;
+  color: white;
+  border-radius: 5px;
+}
+
+.search-place a.search-eat{
+  right: 80px;
+}
+
+.search-place a.search-review{
+  right: 5px;
+}
+
+/**********************************************
+      Reviews/To Eat Comment styles
+***********************************************/
+div.comments{
+  padding-left: 10px;
+  margin-bottom: 8px;
+}
+
+/**********************************************
+      Add/Remove "To Eat" Button styles
+***********************************************/
+div.search-place a.removetoeat
+{
+    color: #fa4850;
+    font-weight: bold;
+    padding: 5px;
+    padding-right: 7px;
+    text-decoration: none;
+    border-radius: 5px;;
+}
+
+div.search-place a.removetoeat:hover
+{
+    background-color: #fa4850;
+    color: #fff;
+}
+
+div.search-place a.reviewtoeat{
+  font-size: 1.1em;
+  color: #26A419;
+  padding: 5px;
+  padding-right: 7px;
+  margin-left: 2%;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+div.search-place a.reviewtoeat:hover{
+  background-color: #26A419;
+  color: #fff;
+}
+
+div.search-place a.reviewtoeat span.plus-sign{
+  font-weight: bold;
+}
+
+/**********************************************
+                  Form styles
+***********************************************/
+div#login input{
+    margin: 5px
+}
+
+div#signup input{
+    margin: 5px 0 0 5px
+}
+
+/**********************************************
+                  Footer styles
+***********************************************/
+footer{
+  padding: 1em;
+  background-color: #5e7493;
+  color: white;
+  text-align: center;
+  margin-top: 3em;
+}
+
+/*******************************************************************************
+                Phone - Portrait Styles
+*******************************************************************************/
+@media screen and (max-width:480px){
+
+/**********************************************
+        General Page Styles/formatting
+***********************************************/
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+div#wrapper{
+  width: 100%;
+}
+
+main {
+  margin: 5%;
+}
+
+.entrance button{
+  margin-top: 1em;
+}
+
+.entrance:nth-child(1){
+  margin-top: 10%;
+}
+
+/*.entrance:nth-child(2){
+  margin-bottom: 20%;
+}*/
+
+form{
+    text-align: center;
+}
+
+/**********************************************
+                  Header Styles
+***********************************************/
+header img{
+  width: 220px;
+  margin-left: calc(50% - 100px);
+  transition: all 0.5s;
+}
+
+/**********************************************
+              Button Styles
+***********************************************/
+#newreviewbutton,
+#edittoeat{
+    margin-left: 35%;
+}
+
+/**********************************************
+                 Map Styles
+***********************************************/
+div#search{
+  max-width: 200px;
+}
+
+.search-place{
+    margin: 1em auto;
+    width: 100%;
+}
+
+#map{
+  max-height: 250px;
+  margin: 0 auto;
+  }
+
+#pac-input {
+  margin: 10px auto 10px auto;
+}
+
+}/*End Phone Potrait Media Query*/
+
+/*******************************************************************************
+                      Phone - Landscape Styles
+*******************************************************************************/
+@media screen and (min-width:481px) and (max-width:736px) {
+
+/**********************************************
+        General Page Styles/formatting
+***********************************************/
+div#wrapper{
+    width: 100%;
+}
+
+form{
+    text-align: center;
+}
+
+/**********************************************
+                  Header Styles
+***********************************************/
+header img{
+  width: 220px;
+  margin-left: calc(50% - 110px);
+}
+
+/**********************************************
+                 Map Styles
+***********************************************/
+div#search{
+  max-width: 200px;
+}
+
+div#search-results{
+  float: right;
+  width: 42%;
+  margin-right: 6%;
+}
+
+.search-place{
+  margin-top: 0;
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+main div#map{
+  width: 48%;
+  max-height: 200px;
+  margin-left: 2%;
+  /*display: inline-block;*/
+  }
+
+  #pac-input {
+    margin: 10px auto 10px auto;
+  }
+
+div#clear-fix{
+  clear: both;
+}
+
+}/*End Phone Landscape Media Query*/

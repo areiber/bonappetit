@@ -1,0 +1,109 @@
+<?php
+/*-----------------------------------------------------
+Start Session & set header and requirements
+------------------------------------------------------*/
+session_start();
+require 'php/db.php';
+$user = $_SESSION["user"];
+if (empty($user)){
+  header("Location:http://bonappetit.website/index.html");
+}
+
+if (isset($_GET['Message'])){
+  print '<script type="text/javascript">alert("' . $_GET['Message'] . '");</script>';
+}
+
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="css/simple-sidebar.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script type="text/javascript">
+        var parts = window.location.search.substr(1).split("&");
+        var $_GET = {};
+        for (var i = 0; i < parts.length; i++) {
+            var temp = parts[i].split("=");
+            $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
+        }
+          window.addEventListener('load',function(){
+            var url = window.location.href;
+            if(url.indexOf("?Success=") != -1 || url.indexOf("&Success=") != -1){
+              var msg_text = $_GET['Success'];
+              var message = document.getElementById("message");
+              message.innerHTML = msg_text;
+              setTimeout(function() {
+                $(message).delay(2000).fadeOut(1000);
+              });
+            }
+          });
+        </script>
+        <title>Bon-Appetit Account</title>
+    </head>
+
+    <body>
+      <?php include_once("analyticstracking.php") ?>
+        <div id="wrapper">
+        <header>
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li><i href="#menu-toggle" aria-hidden="true" class="fa fa-bars fa-3x" id="menu-toggle2"></i></li>
+                <li><a href="reviews.html" class="home-icon">Home</a></li>
+                <li><a href="account.html"></i>My Account</a></li>
+                <li><a href="rate.html">Rate Us</a></li>
+                <li><a href="contact.html"></i>Contact Us</a></li>
+                <li><a href="php/logout.php">Log Out</a></li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+            <i class="fa fa-bars fa-3x" aria-hidden="true" href="#menu-toggle" id="menu-toggle"></i>
+            <a href="reviews.html"><img src="images/logo.png" id="etrance-title" alt="Bon-Appetit logo" /></a>
+
+        </header>
+
+        <main>
+            <h2>My Account</h2>
+            <div id="message"></div>
+            <form id="myaccount" action="php/update-account.php" method="post">
+                <span><em><?php echo $_SESSION["user"]; ?></em></span><br/>
+                <input type="text" name="first" placeholder=<?php echo $_SESSION["first"]; ?>><i class="fa fa-pencil" aria-hidden="true"></i><br/>
+                <input type="text" name="last" placeholder=<?php echo $_SESSION["last"]; ?>><i class="fa fa-pencil" aria-hidden="true"></i><br/>
+                <input type="email" name="email" placeholder=<?php echo $_SESSION["email"]; ?>><i class="fa fa-pencil" aria-hidden="true"></i><br/>
+                <a href="password.html">Change Password</a><br/><br/>
+                <a class="btn btn-danger" href="reviews.html">Cancel</a>
+                <input type="submit"class="btn btn-info"  value="Update"></input>
+            </form>
+
+        </main>
+
+        <div class="push"></div>
+      </div>
+        <footer>
+            <p>&copy; 2016. All rights reserved. An ISTA 416 Project<p>
+        </footer>
+
+        <!-- Menu Toggle Script -->
+        <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        $("#menu-toggle2").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        </script>
+
+    </body>
+</html>
